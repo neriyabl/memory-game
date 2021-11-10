@@ -65,26 +65,46 @@ function flipCard({ target: cardEl }) {
     selectedCards = [];
     return;
   }
-  selectedCards.push(getCard(cardEl.id));
-  cardEl.className = "card";
-  if (selectedCards.length < 2 || selectedCards[0].id === cardEl.id) {
+
+  if (selectedCards[0] && selectedCards[0].id === cardEl.id) {
     return;
   }
 
+  let card = getCard(cardEl.id);
+  selectedCards.push(card);
+  cardEl.innerHTML = card.name;
+  cardEl.className = "card";
+  if (selectedCards.length < 2) {
+    return;
+  }
+
+  const selectedCardsEl = selectedCards.map((card) =>
+    document.getElementById(card.id)
+  );
+
   if (!checkEqual(selectedCards[0], selectedCards[1])) {
-    for (let card of selectedCards) {
+    for (let card of selectedCardsEl) {
       setTimeout(() => {
-        document.getElementById(card.id).className += " hide";
+        card.className += " hide";
+        card.innerHTML = "";
+      }, 500);
+    }
+  } else {
+    for (let card of selectedCardsEl) {
+      setTimeout(() => {
+        card.className = "removed";
+        card.onclick = null;
+        card.innerHTML = "";
       }, 500);
     }
   }
+  selectedCards = [];
 }
 
 function createCardElement(card) {
   const el = document.createElement("div");
   el.id = card.id;
   el.className = "card hide";
-  el.innerText = card.name;
   el.onclick = flipCard;
   return el;
 }
