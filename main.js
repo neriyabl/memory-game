@@ -19,6 +19,12 @@ function remove(card) {
   }, 500);
 }
 
+function show(cardEl) {
+  let card = getCard(cardEl.id);
+  cardEl.innerHTML = card.name;
+  cardEl.className = "card";
+}
+
 function flipCard({ target: cardEl }) {
   if (selectedCards.length >= 2) {
     selectedCards = [];
@@ -30,10 +36,8 @@ function flipCard({ target: cardEl }) {
     return;
   }
 
-  let card = getCard(cardEl.id);
+  show(cardEl);
   selectedCards.push(cardEl);
-  cardEl.innerHTML = card.name;
-  cardEl.className = "card";
   if (selectedCards.length < 2) {
     return;
   }
