@@ -1,20 +1,20 @@
 const cards = [
-  "blue",
-  "green",
-  "yellow",
-  "red",
-  "green",
-  "black",
-  "white",
-  "purple",
-  "blue",
-  "green",
-  "yellow",
-  "red",
-  "green",
-  "black",
-  "white",
-  "purple",
+  { name: "blue", active: true },
+  { name: "green", active: true },
+  { name: "yellow", active: true },
+  { name: "red", active: true },
+  { name: "green", active: true },
+  { name: "black", active: true },
+  { name: "white", active: true },
+  { name: "purple", active: true },
+  { name: "blue", active: true },
+  { name: "green", active: true },
+  { name: "yellow", active: true },
+  { name: "red", active: true },
+  { name: "green", active: true },
+  { name: "black", active: true },
+  { name: "white", active: true },
+  { name: "purple", active: true },
 ];
 
 function rand_range(a, b) {
@@ -39,9 +39,33 @@ function shuffle(arr) {
   }
 }
 
+function check_equal(i, j) {
+  return i !== j && cards[i].name === cards[j].name;
+}
+
+function gameOver() {
+  for (let i of cards) {
+    if (i.active) {
+      return false;
+    }
+  }
+  return true;
+}
+
 function main() {
   shuffle(cards);
-  console.log(cards);
+  while (!gameOver()) {
+    const i = +prompt("insert first index");
+    const j = +prompt("insert second index");
+    if (check_equal(i, j)) {
+      cards[i].active = false;
+      cards[j].active = false;
+      console.log("correct");
+    } else {
+      alert(`you get ${i}=${cards[i].name}, ${j}=${cards[j].name}`);
+    }
+  }
+  alert("you done .....");
 }
 
 main();
