@@ -3,18 +3,20 @@ const cards = [
   { name: "green", active: true },
   { name: "yellow", active: true },
   { name: "red", active: true },
-  { name: "green", active: true },
+  { name: "grey", active: true },
   { name: "black", active: true },
   { name: "white", active: true },
   { name: "purple", active: true },
+  { name: "brown", active: true },
   { name: "blue", active: true },
   { name: "green", active: true },
   { name: "yellow", active: true },
   { name: "red", active: true },
-  { name: "green", active: true },
+  { name: "grey", active: true },
   { name: "black", active: true },
   { name: "white", active: true },
   { name: "purple", active: true },
+  { name: "brown", active: true },
 ];
 
 function rand_range(a, b) {
@@ -52,20 +54,36 @@ function gameOver() {
   return true;
 }
 
-function main() {
-  shuffle(cards);
-  while (!gameOver()) {
-    const i = +prompt("insert first index");
-    const j = +prompt("insert second index");
-    if (check_equal(i, j)) {
-      cards[i].active = false;
-      cards[j].active = false;
-      console.log("correct");
-    } else {
-      alert(`you get ${i}=${cards[i].name}, ${j}=${cards[j].name}`);
-    }
-  }
-  alert("you done .....");
+function create_card_element(card) {
+  const el = document.createElement("div");
+  el.className = "card";
+  el.innerText = card.name;
+  return el;
 }
 
+function init() {
+  shuffle(cards);
+  for (let card of cards) {
+    const card_el = create_card_element(card);
+    board.appendChild(card_el);
+  }
+}
+
+function main() {
+  init();
+  // while (!gameOver()) {
+  //   const i = +prompt("insert first index");
+  //   const j = +prompt("insert second index");
+  //   if (check_equal(i, j)) {
+  //     cards[i].active = false;
+  //     cards[j].active = false;
+  //     console.log("correct");
+  //   } else {
+  //     alert(`you get ${i}=${cards[i].name}, ${j}=${cards[j].name}`);
+  //   }
+  // }
+  // alert("you done .....");
+}
+
+const board = document.getElementById("board");
 main();
