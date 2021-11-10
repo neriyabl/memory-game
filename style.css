@@ -18,4 +18,13 @@ body {
   margin: 5px;
   height: 150px;
   width: 140px;
+  font-size: xx-large;
+  line-height: 150px;
+  vertical-align: middle;
+  color: #555;
+  cursor: pointer;
+}
+
+.hide {
+  background-color: #555;
 }
