@@ -1,7 +1,22 @@
 let selectedCards = [];
 
-function checkEqual(cardA, cardB) {
-  return cardA !== cardB && cardA.name === cardB.name;
+function checkEqual(cardIdA, cardIdB) {
+  return cardIdA !== cardIdB && getCard(cardIdA).name === getCard(cardIdB).name;
+}
+
+function hide(card) {
+  setTimeout(() => {
+    card.className += " hide";
+    card.innerHTML = "";
+  }, 500);
+}
+
+function remove(card) {
+  setTimeout(() => {
+    card.className = "removed";
+    card.onclick = null;
+    card.innerHTML = "";
+  }, 500);
 }
 
 function flipCard({ target: cardEl }) {
@@ -16,33 +31,16 @@ function flipCard({ target: cardEl }) {
   }
 
   let card = getCard(cardEl.id);
-  selectedCards.push(card);
+  selectedCards.push(cardEl);
   cardEl.innerHTML = card.name;
   cardEl.className = "card";
   if (selectedCards.length < 2) {
     return;
   }
 
-  const selectedCardsEl = selectedCards.map((card) =>
-    document.getElementById(card.id)
+  selectedCards.map(
+    checkEqual(selectedCards[0].id, selectedCards[1].id) ? remove : hide
   );
-
-  if (!checkEqual(selectedCards[0], selectedCards[1])) {
-    for (let card of selectedCardsEl) {
-      setTimeout(() => {
-        card.className += " hide";
-        card.innerHTML = "";
-      }, 500);
-    }
-  } else {
-    for (let card of selectedCardsEl) {
-      setTimeout(() => {
-        card.className = "removed";
-        card.onclick = null;
-        card.innerHTML = "";
-      }, 500);
-    }
-  }
   selectedCards = [];
 }
 
